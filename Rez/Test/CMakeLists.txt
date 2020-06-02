@@ -1,4 +1,7 @@
 find_package(Boost COMPONENTS unit_test_framework)
+if(NOT Boost_USE_STATIC_LIBS)
+add_compile_definitions(BOOST_TEST_DYN_LINK)
+endif()
 add_executable(RezUnitTests UnitTests.cc)
 target_link_libraries(RezUnitTests RezLib ${Boost_LIBRARIES})
 target_include_directories(RezUnitTests PRIVATE ${Boost_INCLUDE_DIR})

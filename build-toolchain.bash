@@ -331,6 +331,12 @@ else # SKIP_THIRDPARTY
     removeInterfacesAndLibraries
 fi # SKIP_THIRDPARTY
 
+### Running on Windows in the MSYS environment
+
+if [[ "`uname -s`" = MSYS* ]]; then
+	HOST_CMAKE_FLAGS[${#HOST_CMAKE_FLAGS[@]}]="-DBoost_USE_STATIC_LIBS=ON"
+fi
+
 ##################### Build host-based components: MakePEF, MakeImport, ConvertObj, Rez, ...
 
 echo "Building host-based tools..."
