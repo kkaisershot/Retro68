@@ -41,7 +41,12 @@ add_subdirectory(libretro)
 # add library path so that GCC picks up the freshly-built libretro
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/libretro)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libretro)
+if(CMAKE_HOST_SYSTEM MATCHES MSYS.*)
+# Rez under MSYS prepends a "C:" to the beginning of paths when opening includes
+set(REZ_INCLUDE_PATH "/msys64${CMAKE_CURRENT_SOURCE_DIR}/libretro:/msys64${CMAKE_INSTALL_PREFIX}/RIncludes" )
+else()
 set(REZ_INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/libretro:${CMAKE_INSTALL_PREFIX}/RIncludes" )
+endif()
 
 add_subdirectory(Console)
 add_subdirectory(Samples/HelloWorld)
