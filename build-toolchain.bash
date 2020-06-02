@@ -257,8 +257,6 @@ if [ $SKIP_THIRDPARTY != true ]; then
 		# (Elf2Mac is built by cmake below)
 		mv $PREFIX/bin/m68k-apple-macos-ld $PREFIX/bin/m68k-apple-macos-ld.real
 		mv $PREFIX/m68k-apple-macos/bin/ld $PREFIX/m68k-apple-macos/bin/ld.real
-		ln -s $PREFIX/bin/Elf2Mac $PREFIX/bin/m68k-apple-macos-ld
-		ln -s $PREFIX/bin/Elf2Mac $PREFIX/m68k-apple-macos/bin/ld
 
 		if [ $CLEAN_AFTER_BUILD != false ]; then
 			rm -rf binutils-build
@@ -344,6 +342,11 @@ cd ..
 cmake --build build-host --target install
 
 echo 'subdirs("build-host")' > CTestTestfile.cmake
+
+if [[ $SKIP_THIRDPARTY != true && $BUILD_68K != false ]]; then
+    ln -s $PREFIX/bin/Elf2Mac $PREFIX/bin/m68k-apple-macos-ld
+    ln -s $PREFIX/bin/Elf2Mac $PREFIX/m68k-apple-macos/bin/ld
+fi
 
 	# make tools (such as MakeImport and the compilers) available for later commands
 export PATH=$PREFIX/bin:$PATH
